@@ -1,0 +1,19 @@
+# Dependencias 
+node_modules
+bun.lock
+package-lock.json
+
+# Build
+dist/
+
+# Config IDE
+.idea/
+.vscode/
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+logs/

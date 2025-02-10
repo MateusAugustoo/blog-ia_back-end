@@ -17,3 +17,12 @@ yarn-debug.log*
 yarn-error.log*
 *.log
 logs/
+
+.env
+
+# Prisma
+prisma/.env
+prisma/.prisma/client/
+prisma/migrations/
+prisma/*.db
+dev.db-*

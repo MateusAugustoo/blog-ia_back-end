@@ -2,9 +2,13 @@ import Fastify from 'fastify'
 import { fastifyCors } from '@fastify/cors'
 import { fastifySwagger } from '@fastify/swagger'
 import { fastifySwaggerUi } from '@fastify/swagger-ui'
-import { ZodTypeProvider } from 'fastify-type-provider-zod'
+import { ZodTypeProvider, validatorCompiler, serializerCompiler, jsonSchemaTransform } from 'fastify-type-provider-zod'
+import { blogRoute } from './routes/blogRoute'
 
 const app = Fastify().withTypeProvider<ZodTypeProvider>()
+
+app.setValidatorCompiler(validatorCompiler)
+app.setSerializerCompiler(serializerCompiler)
 
 app.register(fastifyCors, { origin: '*' })
 
@@ -14,7 +18,8 @@ app.register(fastifySwagger, {
       title: 'Blog API',
       version: '1.0.0',
     }
-  }
+  },
+  transform: jsonSchemaTransform
 })
 
 app.register(fastifySwaggerUi, {
@@ -24,6 +29,8 @@ app.register(fastifySwaggerUi, {
 app.get('/', async (request, reply) => {
   return { message: 'hello world!!' }
 })
+
+app.register(blogRoute)
 
 const start = async () => {
   try {

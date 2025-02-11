@@ -12,6 +12,7 @@ export const blogRoute = async (app: FastifyTypeInstance) => {
   app.post('/topics', {
     schema: {
       tags: ['topics'],
+      description: 'Crie um novo tópico informando o title',
       body: z.object({
         title: z.string()
       })

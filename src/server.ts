@@ -3,7 +3,7 @@ import { fastifyCors } from '@fastify/cors'
 import { fastifySwagger } from '@fastify/swagger'
 import { fastifySwaggerUi } from '@fastify/swagger-ui'
 import { ZodTypeProvider, validatorCompiler, serializerCompiler, jsonSchemaTransform } from 'fastify-type-provider-zod'
-import { blogRoute } from './routes/blogRoute'
+import { topicRoute } from './routes/topicRoute'
 
 const app = Fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -30,7 +30,7 @@ app.get('/', async (request, reply) => {
   return { message: 'hello world!!' }
 })
 
-app.register(blogRoute)
+app.register(topicRoute)
 
 const start = async () => {
   try {

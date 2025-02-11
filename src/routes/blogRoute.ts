@@ -22,8 +22,8 @@ export const blogRoute = async (app: FastifyTypeInstance) => {
       const { title } = request.body
       const topic = await TopicService.create(title)
       return reply.code(201).send(topic)
-    } catch (error) {
-      
+    } catch (error: any) {
+      return reply.code(500).send({ message: error.message })
     }
   })
 }

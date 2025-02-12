@@ -5,7 +5,7 @@ import { fastifySwaggerUi } from '@fastify/swagger-ui'
 import { ZodTypeProvider, validatorCompiler, serializerCompiler, jsonSchemaTransform } from 'fastify-type-provider-zod'
 import { topicRoute } from './routes/topicRoute'
 
-const app = Fastify().withTypeProvider<ZodTypeProvider>()
+const app = Fastify({ logger: true }).withTypeProvider<ZodTypeProvider>()
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)

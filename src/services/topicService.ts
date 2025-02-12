@@ -1,4 +1,5 @@
 import { prisma } from "../prisma";
+import { ulid } from 'ulid'
 
 export const TopicService = {
   async getAll() {
@@ -6,7 +7,8 @@ export const TopicService = {
   },
 
   async create(title: string) {
-    return await prisma.topic.create({ data: { title } });
+    const id = ulid()
+    return await prisma.topic.create({ data: { id, title } });
   },
 
   async delete(id: string) {

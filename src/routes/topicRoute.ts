@@ -28,32 +28,34 @@ export const topicRoute = async (app: FastifyTypeInstance) => {
       schema: {
         tags: ["topics"],
         description:
-          "Crie um novo tópico informando o title, cada title e único",
+          "Crie um novo tópico informando o title, cada title é único",
         body: z.object({
           title: z.string(),
         }),
+        response: {
+          201: z.object({
+            message: z.string(),
+          }),
+          400: z.object({
+            message: z.string(),
+          }),
+        },
       },
     },
     async (request, reply) => {
-
-      const titlesExist = await TopicService.getAll();
-
-      if (!request.body.title) {
-        return reply.code(400).send({ message: "Title is required" });
-      }
-      
       try {
         const { title } = request.body;
 
-        if (titlesExist.some(topic => topic.title === title)) {
+        const titlesExist = await TopicService.getAll();
+        if (titlesExist.some((topic) => topic.title === title)) {
           return reply.code(400).send({ message: "Title already exists" });
         }
 
-        const topic = await TopicService.create(title);
-        return reply.code(201).send(topic);
-
-      } catch (error: Error | any) {
-        return reply.code(500).send({ message: error.message });
+        await TopicService.create(title);
+        return reply.code(201).send({ message: "Topic created" });
+      } catch (error) {
+        console.error(error);
+        return reply.code(500).send({ message: "Internal Server Error" });
       }
     }
   );

@@ -11,14 +11,14 @@ datasource db {
 }
 
 model Topic {
-  id        String   @id @default(uuid())
+  id        String   @id 
   title     String   @unique
   createdAt DateTime @default(now())
   blogs     Blog[]
 }
 
 model Blog {
-  id        String   @id @default(uuid())
+  id        String   @id 
   title     String
   content   String
   published Boolean  @default(false)

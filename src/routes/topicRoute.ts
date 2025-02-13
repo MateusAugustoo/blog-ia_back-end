@@ -7,13 +7,28 @@ export const topicRoute = async (app: FastifyTypeInstance) => {
     "/topics",
     {
       schema: {
-        tags: ["topics"],
-        description: "Liste todos os tópicos existentes",
+        tags: ["Topics"],
+        description: "List all existing topics",
+        response: {
+          200: z
+            .array(
+              z.object({
+                id: z.string(),
+                title: z.string(),
+              })
+            )
+            .or(z.object({ message: z.string() })),
+          500: z.object({ message: z.string() }),
+        },
       },
     },
-    async (request, reply) => {
+    async (_, reply) => {
       try {
         const topics = await TopicService.getAll();
+
+        if (topics.length === 0) {
+          return reply.code(200).send({ message: "No topics found" });
+        }
 
         return reply.code(200).send(topics);
       } catch (error: Error | any) {
@@ -26,9 +41,9 @@ export const topicRoute = async (app: FastifyTypeInstance) => {
     "/topics",
     {
       schema: {
-        tags: ["topics"],
+        tags: ["Topics"],
         description:
-          "Crie um novo tópico informando o title, cada title é único",
+          "Create a new topic stating the title, each title is unique",
         body: z.object({
           title: z.string(),
         }),
@@ -37,6 +52,9 @@ export const topicRoute = async (app: FastifyTypeInstance) => {
             message: z.string(),
           }),
           400: z.object({
+            message: z.string(),
+          }),
+          500: z.object({
             message: z.string(),
           }),
         },
@@ -64,19 +82,28 @@ export const topicRoute = async (app: FastifyTypeInstance) => {
     "/topics/:id",
     {
       schema: {
-        tags: ["topics"],
-        description: "Deleta um tópico informando o id",
+        tags: ["Topics"],
+        description: "Delete a topic by entering the id",
         params: z.object({
           id: z.string(),
         }),
+        response: {
+          204: z.object({ message: z.string() }),
+          400: z.object({ message: z.string() }),
+          500: z.object({ message: z.string() }),
+        },
       },
     },
     async (request, reply) => {
       try {
         const { id } = request.params;
-        await TopicService.delete(id);
 
-        return reply.code(204).send();
+        if (!id) {
+          return reply.code(400).send({ message: "Invalid id" });
+        }
+
+        await TopicService.delete(id);
+        return reply.code(204).send({ message: "Topic deleted" });
       } catch (error: Error | any) {
         return reply.code(500).send({ message: error.message });
       }

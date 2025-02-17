@@ -34,6 +34,7 @@ model User {
   email     String   @unique
   name      String?
   password  String
+  photo     String?
   createdAt DateTime @default(now())
   blogs     Blog[]
 }

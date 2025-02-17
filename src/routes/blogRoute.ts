@@ -1,3 +1,3 @@
-import { FastifyTypeInstance } from "../types/types";
+import { FastifyTypeInstance } from "../types/typeFastifyInstance";
 
-export const blogRoute = async (app: FastifyTypeInstance) => {}
+export const blogRoute = async (app: FastifyTypeInstance) => {};

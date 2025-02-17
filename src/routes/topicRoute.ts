@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FastifyTypeInstance } from "../types/types";
+import { FastifyTypeInstance } from "../types/typeFastifyInstance";
 import { TopicService } from "../services/topicService";
 
 export const topicRoute = async (app: FastifyTypeInstance) => {

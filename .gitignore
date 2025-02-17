@@ -19,6 +19,7 @@ yarn-error.log*
 logs/
 
 .env
+config/
 
 # Prisma
 prisma/.env

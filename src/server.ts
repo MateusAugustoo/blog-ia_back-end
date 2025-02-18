@@ -9,6 +9,7 @@ import {
   jsonSchemaTransform,
 } from "fastify-type-provider-zod";
 import { topicRoute } from "./routes/topicRoute";
+import { env } from "./env";
 
 const app = Fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
@@ -35,7 +36,7 @@ app.register(topicRoute);
 
 const start = async () => {
   try {
-    await app.listen({ port: 3333 });
+    await app.listen({ port: env.PORT });
     console.log("server running on port 3333");
   } catch (err) {
     app.log.error(err);

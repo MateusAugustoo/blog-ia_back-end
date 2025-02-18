@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { FastifyTypeInstance } from "../types/typeFastifyInstance";
 import { TopicService } from "../services/topicService";
+import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 
-export const topicRoute = async (app: FastifyTypeInstance) => {
+export const topicRoute: FastifyPluginAsyncZod = async app => {
   app.get(
     "/topics",
     {
@@ -31,8 +31,8 @@ export const topicRoute = async (app: FastifyTypeInstance) => {
         }
 
         return reply.code(200).send(topics);
-      } catch (error: Error | any) {
-        return reply.code(500).send({ message: error.message });
+      } catch (error: unknown) {
+        return reply.code(500).send({ message: (error as Error ).message });
       }
     }
   );
@@ -104,8 +104,8 @@ export const topicRoute = async (app: FastifyTypeInstance) => {
 
         await TopicService.delete(id);
         return reply.code(204).send({ message: "Topic deleted" });
-      } catch (error: Error | any) {
-        return reply.code(500).send({ message: error.message });
+      } catch (error: unknown) {
+        return reply.code(500).send({ message: (error as Error).message });
       }
     }
   );

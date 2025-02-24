@@ -38,7 +38,7 @@ model User {
   uid       String   @unique
   email     String   @unique
   name      String?
-  password  String
+  username  String   @unique
   photo     String?
   role      String @default("user")
   createdAt DateTime @default(now())

@@ -1,6 +1,6 @@
 # Dependencias 
 node_modules
-bun.lock
+bun.lockb
 package-lock.json
 
 # Build
@@ -27,3 +27,5 @@ prisma/.prisma/client/
 prisma/migrations/
 prisma/*.db
 dev.db-*
+prisma/db
+.qodo
